@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f7fcfa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 32px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .header h2 {
+            color: #1a1a1a;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: white;
+            color: #5da88a;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: 1px solid #e8f5f0;
+        }
+
+        .logout-btn:hover {
+            background: #f7fcfa;
+            border-color: #d4ede4;
+        }
+
+        .search-section {
+            background: white;
+            padding: 24px 28px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .search-section h3 {
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #e8f5f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            color: #1a1a1a;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-form input:focus {
+            outline: none;
+            border-color: #7ec4a8;
+        }
+
+        .search-form input::placeholder {
+            color: #999;
+        }
+
+        .search-form button {
+            padding: 10px 24px;
+            background: #6ab89a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-form button:hover {
+            background: #5da88a;
+        }
+
+        .recommend-btn {
+            background: #6ab89a;
+            color: white;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .recommend-btn:hover {
+            background: #5da88a;
+        }
+
+        .section-header {
+            margin: 28px 0 16px 0;
+        }
+
+        .section-header h3 {
+            color: #1a1a1a;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            border: 1px solid #f5f5f5;
+        }
+
+        .book-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: #fafafa;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 16px;
+        }
+
+        .book-title {
+            color: #1a1a1a;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 38px;
+        }
+
+        .book-author {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .book-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .stars span {
+            font-size: 12px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .user-rating {
+            margin-top: 8px;
+        }
+
+        .rate-label {
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 3px;
+            transition: transform 0.15s ease;
+        }
+
+        .star {
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+            color: #e8e8e8;
+        }
+
+        .star:hover {
+            transform: scale(1.05);
+        }
+
+        .star.rated {
+            color: #7ec4a8;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .search-section {
+                padding: 20px;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .books-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px;
+            }
+
+            .book-cover {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2>📚 Book Recommender</h2>
+        <a href="{{ url_for('recommend') }}" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="search-section">
+        <h3>🔍 Search Books to Rate</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <p style="color: #666; font-size: 13px; margin: 0;">
+                You've rated <strong>{{ rated_count }}</strong> book(s)
+            </p>
+        </div>
+        <form action="{{ url_for('search') }}" method="POST" class="search-form">
+            <input type="text" name="query" placeholder="Search for books to rate..." required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Get Recommendations Button -->
+    <div style="text-align: center; margin: 24px 0;">
+        <form action="{{ url_for('recommend') }}" method="POST">
+            <button type="submit" class="recommend-btn">✨ Get My Recommendations</button>
+        </form>
+    </div>
+
+    {% if search_results %}
+    <div class="section-header">
+        <h3>🔍 Search Results</h3>
+    </div>
+
+    <div class="books-grid">
+        {% for book in search_results %}
+        <div class="book-card">
+            <div class="book-cover">
+                <img src="{{ book['image_url'] }}" alt="{{ book['title'] }}" onerror="this.src='https://via.placeholder.com/280x380?text=No+Cover'">
+            </div>
+            <div class="book-info">
+                <h4 class="book-title">{{ book['title'] }}</h4>
+                <p class="book-author">by {{ book['authors'] }}</p>
+                
+                <div class="book-rating">
+                    <div class="stars">
+                        {% set stars = book['average_rating']|round(0,'floor')|int %}
+                        {% for i in range(5) %}
+                            {% if i < stars %}
+                                <span style="color: #7ec4a8;">⭐</span>
+                            {% else %}
+                                <span style="color: #e8e8e8;">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="rating-text">{{ "%.1f"|format(book['average_rating']) }}</span>
+                </div>
+
+                <div class="user-rating">
+                    <p class="rate-label">Rate this book:</p>
+                    <div class="star-rating" data-book-id="{{ book['book_id'] }}">
+                        {% set user_rating = user_ratings.get(book['book_id'], 0) %}
+                        {% for i in range(1, 6) %}
+                            {% if i <= user_rating %}
+                                <span class="star rated" data-rating="{{ i }}">⭐</span>
+                            {% else %}
+                                <span class="star" data-rating="{{ i }}">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="section-header">
+        <h3>🔥 Popular Books</h3>
+    </div>
+
+    <div class="books-grid">
+        {% for book in books %}
+        <div class="book-card">
+            <div class="book-cover">
+                <img src="{{ book['image_url'] }}" alt="{{ book['title'] }}" onerror="this.src='https://via.placeholder.com/280x380?text=No+Cover'">
+            </div>
+            <div class="book-info">
+                <h4 class="book-title">{{ book['title'] }}</h4>
+                <p class="book-author">by {{ book['authors'] }}</p>
+                
+                <div class="book-rating">
+                    <div class="stars">
+                        {% set stars = book['average_rating']|round(0,'floor')|int %}
+                        {% for i in range(5) %}
+                            {% if i < stars %}
+                                <span style="color: #5a5a5a;">⭐</span>
+                            {% else %}
+                                <span style="color: #e8e8e8;">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="rating-text">{{ "%.1f"|format(book['average_rating']) }}</span>
+                </div>
+
+                <div class="user-rating">
+                    <p class="rate-label">Rate this book:</p>
+                    <div class="star-rating" data-book-id="{{ book['book_id'] }}">
+                        {% set user_rating = user_ratings.get(book['book_id'], 0) %}
+                        {% for i in range(1, 6) %}
+                            {% if i <= user_rating %}
+                                <span class="star rated" data-rating="{{ i }}">⭐</span>
+                            {% else %}
+                                <span class="star" data-rating="{{ i }}">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const starRatings = document.querySelectorAll('.star-rating');
+    
+    starRatings.forEach(rating => {
+        const stars = rating.querySelectorAll('.star');
+        const bookId = rating.dataset.bookId;
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const ratingValue = this.dataset.rating;
+                
+                // Update star display
+                stars.forEach((s, index) => {
+                    if (index < ratingValue) {
+                        s.textContent = '⭐';
+                        s.style.color = '#7ec4a8';
+                        s.classList.add('rated');
+                    } else {
+                        s.textContent = '☆';
+                        s.style.color = '#e8e8e8';
+                        s.classList.remove('rated');
+                    }
+                });
+                
+                // Send rating to server
+                fetch('{{ url_for("rate") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `book_id=${bookId}&rating=${ratingValue}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Show brief success feedback
+                        rating.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            rating.style.transform = 'scale(1)';
+                        }, 150);
+                        
+                        // Update rated count
+                        updateRatedCount();
+                    }
+                });
+            });
+            
+            // Hover effect
+            star.addEventListener('mouseenter', function() {
+                const hoverValue = this.dataset.rating;
+                stars.forEach((s, index) => {
+                    if (index < hoverValue) {
+                        s.textContent = '⭐';
+                        s.style.color = '#7ec4a8';
+                    } else {
+                        s.textContent = '☆';
+                        s.style.color = '#e8e8e8';
+                    }
+                });
+            });
+        });
+        
+        // Reset on mouse leave
+        rating.addEventListener('mouseleave', function() {
+            const stars = rating.querySelectorAll('.star');
+            stars.forEach((s) => {
+                if (s.classList.contains('rated')) {
+                    s.textContent = '⭐';
+                    s.style.color = '#7ec4a8';
+                } else {
+                    s.textContent = '☆';
+                    s.style.color = '#e8e8e8';
+                }
+            });
+        });
+    });
+    
+    function updateRatedCount() {
+        // Fetch the updated count without reloading the page
+        fetch('{{ url_for("home") }}')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const countElement = doc.querySelector('.search-section p strong');
+                if (countElement) {
+                    const currentCountElement = document.querySelector('.search-section p strong');
+                    if (currentCountElement) {
+                        currentCountElement.textContent = countElement.textContent;
+                    }
+                }
+            });
+    }
+});
+</script>
+</body>
+</html>
